@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     m_Process(nullptr),
-    m_TagModel(new QStandardItemModel())
+    m_TagModel(new QStandardItemModel(this))
 {
     ui->setupUi(this);
     ui->andTagFilter->ListView()->setModel(m_TagModel);
@@ -16,7 +16,6 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete m_Process;
 }
 
 void MainWindow::FetchTestsAndTags()
@@ -41,6 +40,7 @@ void MainWindow::OnFetchFinished(int, QProcess::ExitStatus)
 
     for(QString string : list)
     {
+        // The model becomes the owner of the created items, so no delete needed
         auto* item = new QStandardItem(string);
         m_TagModel->appendRow(item);
     }
