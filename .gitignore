@@ -45,3 +45,5 @@ Makefile*
 #Build Paths
 
 build-*/
+debug/
+x64/

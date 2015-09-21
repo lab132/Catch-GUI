@@ -13,8 +13,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    TagFilterWidget.cpp \
+    ExePickerWidget.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    TagFilterWidget.h \
+    ExePickerWidget.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    TagFilterWidget.ui \
+    ExePickerWidget.ui
