@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>882</width>
     <height>83</height>
    </rect>
   </property>
@@ -46,5 +46,25 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>pressed()</signal>
+   <receiver>ExePickerWidget</receiver>
+   <slot>BrowseExe()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>797</x>
+     <y>39</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>679</x>
+     <y>6</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>BrowseExe()</slot>
+ </slots>
 </ui>

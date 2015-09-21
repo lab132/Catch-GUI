@@ -15,6 +15,9 @@ public:
     explicit ExePickerWidget(QWidget *parent = 0);
     ~ExePickerWidget();
 
+public slots:
+    void BrowseExe();
+
 private:
     Ui::ExePickerWidget *ui;
 };
