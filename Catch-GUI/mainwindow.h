@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QProcess>
+#include <QStandardItemModel>
 
 namespace Ui {
 class MainWindow;
@@ -15,8 +17,16 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+public slots:
+    void FetchTestsAndTags();
+    void OnFetchFinished(int, QProcess::ExitStatus);
+
 private:
     Ui::MainWindow *ui;
+
+    QProcess* m_Process;
+    QStringList m_FetchArguments;
+    QStandardItemModel* m_TagModel;
 };
 
 #endif // MAINWINDOW_H

@@ -12,3 +12,8 @@ TagFilterWidget::~TagFilterWidget()
 {
     delete ui;
 }
+
+QListView *TagFilterWidget::ListView() const
+{
+    return ui->listView;
+}

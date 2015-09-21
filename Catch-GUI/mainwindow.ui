@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="ExePickerWidget" name="widget" native="true"/>
+     <widget class="ExePickerWidget" name="exePicker" native="true"/>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
@@ -120,5 +120,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionFetch</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>FetchTestsAndTags()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>335</x>
+     <y>212</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>FetchTestsAndTags()</slot>
+ </slots>
 </ui>

@@ -14,10 +14,17 @@ ExePickerWidget::~ExePickerWidget()
     delete ui;
 }
 
+const QFileInfo &ExePickerWidget::FilePath() const
+{
+    return m_Info;
+}
+
 void ExePickerWidget::BrowseExe()
 {
     QString fileName;
     fileName = QFileDialog::getOpenFileName(this, tr("Select Catch Exe"), QString(), tr("Catch Exe (*.exe)"));
+
+    m_Info = QFileInfo(fileName);
 
     ui->lineEdit->setText(fileName);
 }
