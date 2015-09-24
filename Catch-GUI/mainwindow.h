@@ -27,6 +27,7 @@ private:
     QProcess* m_Process;
     QStringList m_FetchArguments;
     QStandardItemModel* m_TagModel;
+    QStandardItemModel* m_TestModel;
 };
 
 #endif // MAINWINDOW_H

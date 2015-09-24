@@ -1,15 +1,19 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QProcess>
+#include <QMessageBox>
+#include "CatchTest.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     m_Process(nullptr),
-    m_TagModel(new QStandardItemModel(this))
+    m_TagModel(new QStandardItemModel(this)),
+    m_TestModel(new QStandardItemModel(this))
 {
     ui->setupUi(this);
     ui->andTagFilter->ListView()->setModel(m_TagModel);
+    ui->orTagFilter->ListView()->setModel(m_TestModel);
     m_FetchArguments << "-l";
 }
 
@@ -38,11 +42,35 @@ void MainWindow::OnFetchFinished(int, QProcess::ExitStatus)
 
     QStringList list = output.split("\n");
 
-    for(QString string : list)
+    if(list.size() < 0 || !list[0].startsWith("All available test cases:"))
     {
-        // The model becomes the owner of the created items, so no delete needed
-        auto* item = new QStandardItem(string);
-        m_TagModel->appendRow(item);
+        QMessageBox errorBox;
+        errorBox.setText(tr("The selected exe is not a Catch exe!"));
+        errorBox.setIcon(QMessageBox::Critical);
+        errorBox.exec();
+        return;
+    }
+
+    list.removeFirst();
+
+    while(list.size() > 0 && list[0].startsWith("  "))
+    {
+        QStringList toParse = list.mid(0,2);
+
+        CatchTest test = CatchTest::ParseFromCommandLine(toParse);
+        list.removeFirst();
+
+        if(test.Tags().size() != 0)
+        {
+            list.removeFirst();
+        }
+
+        QStandardItem* testName = new QStandardItem(test.Name());
+        QStandardItem* tags = new QStandardItem(test.Tags().join(','));
+
+        m_TagModel->appendRow(tags);
+        m_TestModel->appendRow(testName);
+
     }
 
 

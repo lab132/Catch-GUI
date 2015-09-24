@@ -15,11 +15,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     TagFilterWidget.cpp \
-    ExePickerWidget.cpp
+    ExePickerWidget.cpp \
+    CatchTest.cpp
 
 HEADERS  += mainwindow.h \
     TagFilterWidget.h \
-    ExePickerWidget.h
+    ExePickerWidget.h \
+    CatchTest.h
 
 FORMS    += mainwindow.ui \
     TagFilterWidget.ui \
