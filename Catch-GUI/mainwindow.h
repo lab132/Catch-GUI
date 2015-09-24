@@ -17,9 +17,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void BuildCommandLine();
+
 public slots:
     void FetchTestsAndTags();
     void OnFetchFinished(int, QProcess::ExitStatus);
+    void OnItemChanged(QStandardItem*);
 
 private:
     Ui::MainWindow *ui;

@@ -16,16 +16,8 @@ CatchTest CatchTest::ParseFromCommandLine(const QStringList &cmd)
     QStringList tags;
     if(cmd[1].startsWith("    "))
     {
-        tags = cmd[1].trimmed().split(QRegExp("[\\[\\]]"));
-        QMutableStringListIterator i(tags);
-        while(i.hasNext())
-        {
-            QString cur = i.next();
-            if(cur.isEmpty())
-            {
-                i.remove();
-            }
-        }
+        tags = cmd[1].trimmed().split(QRegExp("[\\[\\]]"), QString::SkipEmptyParts);
+
     }
     return CatchTest(name, tags);
 }

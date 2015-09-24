@@ -16,13 +16,16 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     TagFilterWidget.cpp \
     ExePickerWidget.cpp \
-    CatchTest.cpp
+    CatchTest.cpp \
+    CatchCommandLine.cpp
 
 HEADERS  += mainwindow.h \
     TagFilterWidget.h \
     ExePickerWidget.h \
-    CatchTest.h
+    CatchTest.h \
+    CatchCommandLine.h
 
 FORMS    += mainwindow.ui \
     TagFilterWidget.ui \
-    ExePickerWidget.ui
+    ExePickerWidget.ui \
+    CatchCommandLine.ui
