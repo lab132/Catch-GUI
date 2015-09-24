@@ -53,6 +53,8 @@ void MainWindow::OnFetchFinished(int, QProcess::ExitStatus)
 
     list.removeFirst();
 
+    QStringList tags;
+
     while(list.size() > 0 && list[0].startsWith("  "))
     {
         QStringList toParse = list.mid(0,2);
@@ -66,11 +68,21 @@ void MainWindow::OnFetchFinished(int, QProcess::ExitStatus)
         }
 
         QStandardItem* testName = new QStandardItem(test.Name());
-        QStandardItem* tags = new QStandardItem(test.Tags().join(','));
+        testName->setCheckable(true);
 
-        m_TagModel->appendRow(tags);
+        tags << test.Tags();
         m_TestModel->appendRow(testName);
 
+    }
+
+    tags.removeDuplicates();
+
+    for(auto& string : tags)
+    {
+        QStandardItem* tag = new QStandardItem("[" + string + "]");
+        tag->setCheckable(true);
+
+        m_TagModel->appendRow(tag);
     }
 
 
