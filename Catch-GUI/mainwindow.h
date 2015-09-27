@@ -21,6 +21,8 @@ public:
 
 public slots:
     void FetchTestsAndTags();
+    void RunTests();
+    void OnRunFinished(int, QProcess::ExitStatus);
     void OnFetchFinished(int, QProcess::ExitStatus);
     void OnItemChanged(QStandardItem*);
 
@@ -31,6 +33,8 @@ private:
     QStringList m_FetchArguments;
     QStandardItemModel* m_TagModel;
     QStandardItemModel* m_TestModel;
+
+    QStringList m_RunArguments;
 };
 
 #endif // MAINWINDOW_H

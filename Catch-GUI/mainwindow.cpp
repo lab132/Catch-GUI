@@ -4,6 +4,8 @@
 #include <QMessageBox>
 #include "CatchTest.h"
 #include <QDebug>
+#include <QtXml>
+#include <QDomDocument>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -27,11 +29,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::BuildCommandLine()
 {
-    QStringList arguments;
+    m_RunArguments.clear();
 
-    arguments << ui->exePicker->FilePath().absoluteFilePath();
+    //m_RunArguments << ui->exePicker->FilePath().absoluteFilePath();
 
-    arguments << "-r" << "xml";
+    m_RunArguments << "-r" << "xml";
+    m_RunArguments << "-s";
 
     QStringList testsAndTags;
 
@@ -57,9 +60,12 @@ void MainWindow::BuildCommandLine()
         }
     }
 
-    arguments << testsAndTags.join(",");
+    m_RunArguments << testsAndTags.join(",");
 
-    ui->catchCommandLine->SetText(arguments.join(" "));
+    QStringList command = m_RunArguments;
+    command.prepend(ui->exePicker->FilePath().absoluteFilePath());
+
+    ui->catchCommandLine->SetText(command.join(" "));
 }
 
 void MainWindow::FetchTestsAndTags()
@@ -70,6 +76,47 @@ void MainWindow::FetchTestsAndTags()
         connect( m_Process, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(OnFetchFinished(int,QProcess::ExitStatus)));
         m_Process->start(ui->exePicker->FilePath().absoluteFilePath(), m_FetchArguments);
     }
+}
+
+void MainWindow::RunTests()
+{
+    if(ui->exePicker->FilePath().exists())
+    {
+        if(m_Process)
+        {
+            delete m_Process;
+            m_Process = nullptr;
+        }
+        m_Process = new QProcess(this);
+        connect( m_Process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(OnRunFinished(int,QProcess::ExitStatus)));
+        m_Process->start(ui->exePicker->FilePath().absoluteFilePath(), m_RunArguments);
+        ui->statusBar->showMessage(tr("Running...."));
+    }
+}
+
+void MainWindow::OnRunFinished(int, QProcess::ExitStatus)
+{
+    QString output = QString(m_Process->readAllStandardOutput());
+
+    qDebug() << output;
+
+    QDomDocument document;
+    if(!document.setContent(output))
+    {
+        ui->statusBar->showMessage(tr("Could not parse output of catch exe!"));
+    }
+    else
+    {
+       QDomElement element = document.documentElement();
+       auto nodeList = element.elementsByTagName("OverallResults");
+       auto lastElement = nodeList.at(nodeList.length()-1);
+       int successes = lastElement.attributes().namedItem("successes").toAttr().value().toInt();
+       int failures = lastElement.attributes().namedItem("failures").toAttr().value().toInt();
+       int expectedFailures = lastElement.attributes().namedItem("expectedFailures").toAttr().value().toInt();
+
+       ui->statusBar->showMessage(tr("Result: Successes: %1, Failures: %2, Expected Failures: %3").arg(successes).arg(failures).arg(expectedFailures));
+    }
+
 }
 
 void MainWindow::OnFetchFinished(int, QProcess::ExitStatus)

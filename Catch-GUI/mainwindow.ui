@@ -24,9 +24,7 @@
        <widget class="TagFilterWidget" name="testList" native="true"/>
       </item>
       <item>
-       <widget class="TagFilterWidget" name="orTagFilter" native="true">
-        <zorder>catchCommandLine</zorder>
-       </widget>
+       <widget class="TagFilterWidget" name="orTagFilter" native="true"/>
       </item>
       <item>
        <widget class="TagFilterWidget" name="andTagFilter" native="true"/>
@@ -150,8 +148,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionRun</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>RunTests()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>335</x>
+     <y>212</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>FetchTestsAndTags()</slot>
+  <slot>RunTests()</slot>
  </slots>
 </ui>
