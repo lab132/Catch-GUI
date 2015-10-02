@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     ExePickerWidget.cpp \
     CatchTest.cpp \
     CatchCommandLine.cpp \
-    TreeNode.cpp
+    TreeNode.cpp \
+    ResultWidget.cpp
 
 HEADERS  += mainwindow.h \
     TagFilterWidget.h \
@@ -28,9 +29,11 @@ HEADERS  += mainwindow.h \
     CatchCommandLine.h \
     TreeModel.h \
     TreeModel.inl \
-    TreeNode.h
+    TreeNode.h \
+    ResultWidget.h
 
 FORMS    += mainwindow.ui \
     TagFilterWidget.ui \
     ExePickerWidget.ui \
-    CatchCommandLine.ui
+    CatchCommandLine.ui \
+    ResultWidget.ui
