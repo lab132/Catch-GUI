@@ -18,13 +18,17 @@ SOURCES += main.cpp\
     TagFilterWidget.cpp \
     ExePickerWidget.cpp \
     CatchTest.cpp \
-    CatchCommandLine.cpp
+    CatchCommandLine.cpp \
+    TreeNode.cpp
 
 HEADERS  += mainwindow.h \
     TagFilterWidget.h \
     ExePickerWidget.h \
     CatchTest.h \
-    CatchCommandLine.h
+    CatchCommandLine.h \
+    TreeModel.h \
+    TreeModel.inl \
+    TreeNode.h
 
 FORMS    += mainwindow.ui \
     TagFilterWidget.ui \
